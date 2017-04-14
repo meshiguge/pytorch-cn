@@ -4028,10 +4028,10 @@ torch.eig(a, eigenvectors=False, out=None) -> (Tensor, Tensor)
 torch.gels(B, A, out=None) → Tensor
 ```
 对形如\\( m \times n \\)的满秩矩阵`a`计算其最小二乘和最小范数问题的解。
-如果\\( m >= n \\),`gels`对最小均方进行求解：
+如果\\( m >= n \\),`gels`对最小均方进行求解，即：
 $$minimize  	  \qquad    ‖X‖_F     $$
 
-如果\\( m < n \\),`gels`求解最小范数问题。
+如果\\( m < n \\),`gels`求解最小范数问题，即：
 $$minimize    	 \qquad   ‖X‖_F   \qquad   subject \ to  \quad	a \quad b	AX=B $$
 
 返回矩阵\\(X \\)的前\\(n \\) 行包含解。余下的行包含以下残差信息: the euclidean norm of each column starting at row nn is the residual for the corresponding column.
@@ -4114,14 +4114,13 @@ torch.gesv(B, A, out=None) -> (Tensor, Tensor)
 ```
 \\( X, LU = torch.gesv(B, A) \\)，返回线性方程组\\(AX=B \\)的解。
 
-LU contains L and U factors for LU factorization of A.
-
-A须为非奇异方阵，如果A是一个\\( m \times m \\)矩阵，B 是\\( m \times m \\)矩阵，则LU 是\\( m \times x \\)矩阵， \\( m \times k \\)矩阵
+LU 包含两个矩阵L，U。A须为非奇异方阵，如果A是一个\\( m \times m \\)矩阵，B 是\\( m \times k \\)矩阵，则LU 是\\( m \times m \\)矩阵， X为\\( m \times k \\)矩阵
 
 参数：
+
 - B (Tensor) – \\( m \times k \\)矩阵
 - A (Tensor) – \\( m \times m \\)矩阵
-- out (Tensor, optional) – 可选地输入矩阵
+- out (Tensor, optional) – 可选地输出矩阵\\( X \\)
 
 例子: 
 ```python 
@@ -4142,11 +4141,12 @@ A须为非奇异方阵，如果A是一个\\( m \times m \\)矩阵，B 是\\( m \
 torch.inverse(input, out=None) → Tensor
 ```
 
-对方阵输入取逆。
+对方阵输入`input` 取逆。
 *注意* ： Irrespective of the original strides, the returned matrix will be transposed, i.e. with strides (1, m) instead of (m, 1)
 
 
 参数 ：
+
 - input (Tensor) – 输入2维张量
 - out (Tensor, optional) – 输出张量
 
@@ -4193,10 +4193,11 @@ torch.inverse(input, out=None) → Tensor
 torch.mm(mat1, mat2, out=None) → Tensor
 ```
 
-对矩阵`mat1`和`mat2`进行相乘。 如果`mat1` 是一个\\ ( n x m \\ )张量，`mat2` 是一个n x p张量，将会输出一个n x p 张量。
+对矩阵`mat1`和`mat2`进行相乘。 如果`mat1` 是一个\\( n \times m \\)  张量，`mat2` 是一个 \\( m \times p \\) 张量，将会输出一个 \\( n \times p \\)  张量`out`。
 
 
 参数 ：
+
 - mat1 (Tensor) – 第一个相乘矩阵
 - mat2 (Tensor) – 第二个相乘矩阵
 - out (Tensor, optional) – 输出张量
@@ -4216,14 +4217,16 @@ torch.mm(mat1, mat2, out=None) → Tensor
 torch.mv(mat, vec, out=None) → Tensor
 ```
 
-对矩阵`mat`和向量`vec`进行相乘。 如果`mat` 是一个n x m张量，`vec` 是一个m元 1维张量，将会输出一个n 元 1维张量。
+对矩阵`mat`和向量`vec`进行相乘。 如果`mat` 是一个\\( n \times m \\)张量，`vec` 是一个\\( m \\)元 1维张量，将会输出一个\\( n \\) 元 1维张量。
 
 
 参数 ：
+
 - mat (Tensor) – 相乘矩阵
 - vec (Tensor) – 相乘向量
 - out (Tensor, optional) – 输出张量
-  例子: 
+ 
+例子: 
 ```python
 >>> mat = torch.randn(2, 3)
 >>> vec = torch.randn(3)
@@ -4232,30 +4235,28 @@ torch.mv(mat, vec, out=None) → Tensor
 -2.2950
 [torch.FloatTensor of size 2]
 ```
-torch.orgqr()
-torch.ormqr()
-torch.potrf()
-torch.potri()
-torch.potrs()
-torch.pstrf()
 
+### torch.orgqr
 ```python
 torch.orgqr()
 ```
-
+### torch.ormqr
 ```python
 torch.ormqr()
 ```
-
+### torch.potrf
 ```python
 torch.potrf()
 ```
+### torch.potri
 ```python
 torch.potri()
 ```
+### torch.potrs
 ```python
 torch.potrs()
 ```
+### torch.pstrf
 ```python
 torch.pstrf()
 ```
@@ -4263,19 +4264,23 @@ torch.pstrf()
 ```python 
 torch.qr(input, out=None) -> (Tensor, Tensor)
 ```
-计算输入矩阵的QR分解：返回两个矩阵q ,r 使得 x=q∗r ，这里 q 是一个半正交矩阵与 r 是一个上三角矩阵
+计算输入矩阵的QR分解：返回两个矩阵\\( q \\) ,\\( r \\)， 使得 \\( x=q∗r \\) ，这里\\( q \\)  是一个半正交矩阵与 \\( r \\) 是一个上三角矩阵
 
-This returns the thin (reduced) QR factorization.
- 注意 precision may be lost if the magnitudes of the elements of input are large
-注意while it should always give you a valid decomposition, it may not give you the same one across platforms - it will depend on your LAPACK implementation.
+本函数返回一个thin(reduced)QR分解。 
+
+** 注意** 如果输入很大，可能可能会丢失精度。
+
+** 注意** 本函数依赖于你的LAPACK实现，虽然总能返回一个合法的分解，但不同平台可能得到不同的结果。
+
 Irrespective of the original strides, the returned matrix q will be transposed, i.e. with strides (1, m) instead of (m, 1).
 
 
 参数：
 
 - input (Tensor) – 输入的2维张量
-- out (tuple, optional) – `tuple`，包含Q和R
-  例子: 
+- out (tuple, optional) – 输出元组`tuple`，包含Q和R
+ 
+例子: 
 ```python
 >>> a = torch.Tensor([[12, -51, 4], [6, 167, -68], [-4, 24, -41]])
 >>> q, r = torch.qr(a)
@@ -4318,6 +4323,8 @@ torch.svd(input, some=True, out=None) -> (Tensor, Tensor, Tensor)
 \\(U \\) 形状为 \\(n \times n \\)，\\(S \\) 形状为 \\(n \times m \\) ，\\(V \\) 形状为 \\(m \times m \\) 
 
 `some` 代表了需要计算的奇异值数目。如果 `some=True`, it computes some and some=False computes all.
+
+Irrespective of the original strides, the returned matrix U will be transposed, i.e. with strides (1, n) instead of (n, 1).
 
 参数：
 
@@ -4379,10 +4386,11 @@ torch.symeig(input, eigenvectors=False, upper=True, out=None) -> (Tensor, Tensor
 ```
 \\(e, V = torch.symeig(input)\\) 返回实对称矩阵`input`的特征值和特征向量。 
 
-\\(input\\) and \\(V\\) 为 \\(m \times m\\) 矩阵，\\(e \\) 是一个\\(m\\) 维向量。
+\\(input\\) 和 \\(V\\) 为 \\(m \times m\\) 矩阵，\\(e \\) 是一个\\(m\\) 维向量。
 此函数计算`intput`的所有特征值(和特征向量)，使得 \\(input = V diag(e) V’\\)  
 布尔值参数`eigenvectors` 规定是否只计算特征向量。如果为`False`，则只计算特征值；若设为`True`，则两者都会计算。
 因为输入矩阵 \\( input\\) 是对称的，所以默认只需要上三角矩阵。如果参数`upper`为 `False`，下三角矩阵部分也被利用。
+
 **注意**: Irrespective of the original strides, the returned matrix V will be transposed, i.e. with strides (1, m) instead of (m, 1) 
 
 
@@ -4424,5 +4432,3 @@ torch.symeig(input, eigenvectors=False, upper=True, out=None) -> (Tensor, Tensor
 ```python
  torch.trtrs()
 ```
-
-
