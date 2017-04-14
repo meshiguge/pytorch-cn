@@ -3598,7 +3598,7 @@ torch.diag(input, diagonal=0, out=None) → Tensor
 -0.2239
 [torch.FloatTensor of size 2]
 ```
-### torch.histc(input, bins=100, min=0, max=0, out=None) → Tensor
+### torch.histc
 ```python
 torch.histc(input, bins=100, min=0, max=0, out=None) → Tensor
 ```
@@ -3676,8 +3676,10 @@ torch.trace(input) → float
 >>> torch.trace(x)
 15.0
 ```
-### torch.tril(input, k=0, out=None) → Tensor
-
+### torch.tril
+```python
+torch.tril(input, k=0, out=None) → Tensor
+```
 返回一个张量`out`，包含输入矩阵(2D张量)的下三角部分，`out`其余部分被设为`0`。这里所说的下三角部分为矩阵指定对角线`diagonal`之上的元素。
 
 参数`k`控制对角线: 
@@ -3723,8 +3725,10 @@ torch.trace(input) → float
 [torch.FloatTensor of size 3x3]
 ```
 
-### torch.triu(input, k=0, out=None) → Tensor
-
+### torch.triu 
+```python
+torch.triu(input, k=0, out=None) → Tensor
+```
 返回一个张量，包含输入矩阵(2D张量)的上三角部分，其余部分被设为`0`。这里所说的上三角部分为矩阵指定对角线`diagonal`之上的元素。
 
 参数`k`控制对角线: 
